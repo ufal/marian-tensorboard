@@ -86,10 +86,15 @@ class JobMonitor():
 
         self.writer.add_scalar("train/speed[words per sec]", speed, up, wall_time)
 
-        _, _lr, lr = rest
+        try:
+            _, _g_norm, g_norm, _, _lr, lr = rest
+            lr = float(lr)
+            self.writer.add_scalar("train/learning_rate", lr, up, wall_time)
+        except ValueError:
+            _, _g_norm, g_norm = rest
 
-        lr = float(lr)
-        self.writer.add_scalar("train/learning_rate", lr, up, wall_time)
+        g_norm = float(g_norm)
+        self.writer.add_scalar("train/g-norm", g_norm, up, wall_time)
         self.writer.add_scalar("train/gpus", self.gpus, up, wall_time)
 
         return up
@@ -152,7 +157,7 @@ class JobMonitor():
                         self.gpus += 1
                 elif "] Ep. " in line and "[valid]" not in line:
                     up = self.parse_train(line)
-                elif "[valid]" in line:
+                elif "] Ep. " in line and "[valid]" in line:
                     self.parse_valid(line)
         self.last_update_line = i
         print("last line id:",self.last_update_line)
