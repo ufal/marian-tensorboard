@@ -60,6 +60,8 @@ Install, follow the steps in Run section above and observe some training and val
 
 ## FAQ
 
-TODO
+- Licence: MIT, see Licence.md
 
-There are many points and features to explain. Feel free to ask Dominik :)
+- There are many points and features to explain. Feel free to ask.
+
+- Concat: Dominik Macháček: machacek [at] ufal.mff.cuni.cz
